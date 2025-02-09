@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Gráfico Personalizado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #1E1E1E;
+            color: #E0E0E0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #2C2C2C;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 15px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #555;
+            background: #1E1E1E;
+            color: #E0E0E0;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+            margin: 12px 0;
+        }
+
+        .btn-gerar {
+            background: #007BFF;
+            color: white;
+        }
+
+        .btn-gerar:hover {
+            background: #0056b3;
+        }
+
+        .btn-adicionar {
+            background: #444;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .btn-adicionar:hover {
+            background: #666;
+        }
+
+        .small-input {
+            display: inline-block;
+            width: 48%;
+            margin-bottom: 10px;
+        }
+
+        .small-input:first-child {
+            margin-right: 4%;
+        }
+
+        .item {
+            margin-bottom: 15px;
+        }
+
+        .copy-container {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            background: #1E1E1E;
+            border-radius: 6px;
+            border: 1px solid #555;
+            overflow: hidden;
+        }
+
+        textarea {
+            flex: 1;
+            height: 200px;
+            /* Aumentei a altura para tornar mais legível */
+            padding: 10px;
+            border: none;
+            background: #1E1E1E;
+            color: #E0E0E0;
+            font-size: 16px;
+            resize: none;
+            border-radius: 6px 0 0 6px;
+            /* Adicionei cantos arredondados */
+        }
+
+        .btn-copy {
+            width: 50px;
+            height: 200px;
+            border: none;
+            background: #00C853;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 0;
+            border-radius: 0 6px 6px 0;
+            /* Adicionei cantos arredondados */
+        }
+
+        .btn-copy:hover {
+            background: #009624;
+        }
+
+        .copy-message {
+            font-size: 14px;
+            color: #00C853;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .copy-message.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Gerador de Gráfico Personalizado</h1>
+        <form id="graficoForm">
+            <!-- Nomes de acesso -->
+            <label for="nomesAcesso">Nomes de Acesso ao Gráfico (até 3, separados por vírgula):</label>
+            <input type="text" id="nomesAcesso" name="nomes" placeholder="Ex: Ana, Ana Julia, Aninha" required>
+
+            <!-- Dica -->
+            <label for="dica">Dica:</label>
+            <input type="text" id="dica" name="dica" placeholder="Digite uma dica" required>
+
+            <!-- Itens e porcentagens -->
+            <h2>Itens e Porcentagens</h2>
+            <div id="itens">
+                <!-- Itens serão adicionados via JavaScript -->
+            </div>
+            <button type="button" onclick="adicionarItem()" class="btn-adicionar">Adicionar Item</button>
+
+            <!-- Botão para gerar o gráfico -->
+            <button type="submit" class="btn-gerar">Gerar Gráfico</button>
+        </form>
+
+        <div class="copy-container">
+            <textarea id="htmlPronto" placeholder="O código gerado aparecerá aqui..."></textarea>
+            <button class="btn-copy" onclick="copiarTexto()">📋</button>
+        </div>
+
+        <p id="copyMessage" class="copy-message">Código copiado!</p>
+    </div>
+
+    <script src="gerar_grafico.js"></script>
+</body>
+
+</html>

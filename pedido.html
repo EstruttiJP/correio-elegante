@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Irrecusavel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(to left, #ffa7f0, #ff91f0, #ffaffb);
+            text-align: center;
+            color: #ffffff;
+            padding-top: 50px;
+            font-family: 'Questrial', sans-serif;
+            font-size: 22px;
+        }
+
+        button {
+            margin: 20px;
+            cursor: pointer;
+            background-color: #ff000dab;
+            color: #ffffff;
+            font-size: 30px;
+            border-radius: 50px;
+            border: none;
+            height: 50px;
+            width: 180px;
+            box-shadow: 0 4px #cf000abb;
+            transition: all 0.1s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #ff2768;
+            box-shadow: 0 4px #b9004d;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        const chaveSecreta = "minha-chave-super-secreta";
+
+        function descriptografarPedido(pedidoCriptografado) {
+            try {
+                const bytes = CryptoJS.AES.decrypt(decodeURIComponent(pedidoCriptografado), chaveSecreta);
+                return bytes.toString(CryptoJS.enc.Utf8);
+            } catch (error) {
+                return "Pedido inválido";
+            }
+        }
+
+        function getPedidoFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const pedidoCriptografado = params.get('pedido');
+            return pedidoCriptografado ? descriptografarPedido(pedidoCriptografado) : 'Nenhum pedido encontrado';
+        }
+
+        window.onload = function () {
+            document.getElementById("pedido").innerText = getPedidoFromUrl();
+        };
+    </script>
+</head>
+
+<body>
+    <h1 id="pedido"></h1>
+    <button id="sim">sim</button>
+    <button id="nao">não</button>
+    <script>
+        const nao = document.getElementById("nao");
+        nao.addEventListener("mouseover", function () {
+            const randomX = Math.floor(Math.random() * window.innerWidth);
+            const randomY = Math.floor(Math.random() * window.innerHeight);
+            nao.style.position = "absolute";
+            nao.style.top = randomY + "px";
+            nao.style.left = randomX + "px";
+        });
+
+        const sim = document.getElementById("sim");
+        sim.addEventListener("click", function () {
+            window.location.href = "https://youtu.be/izGwDsrQ1eQ";
+        });
+    </script>
+</body>
+
+</html>

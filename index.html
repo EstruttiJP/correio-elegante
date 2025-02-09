@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index - Página Inicial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #1E1E1E;
+            color: #E0E0E0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #2C2C2C;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 10px 0;
+        }
+
+        nav ul li a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: 600;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background: #007BFF;
+            color: white;
+        }
+
+        .img {
+            width: 100px;
+            margin-left: 10px;
+        }
+
+        .img.cripto {
+            width: 60px;
+        }
+
+        .img.grafico {
+            width: 50px;
+        }
+
+        .heart {
+            margin-left: 8px;
+            font-size: 2rem;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Correio Elegante do 3° DS</h1>
+        <nav>
+            <ul>
+                <li><a href="pedido.html">Pedido Irrecusável <img src="img/pedido.png" alt="" class="img"></a></li>
+                <li><a href="gerar_pedido.html">Gerar link do Pedido <img src="img/cripto.png" alt=""
+                            class="img cripto"></a></li>
+                <li><a href="grafico.html">Gráfico do Coração <span class="heart">❤️</span></a></li>
+                <li><a href="gerar_grafico.html">Gerar Gráfico Personalizado<img src="img/grafico.png" alt=""
+                            class="img grafico"></a></li>
+            </ul>
+        </nav>
+    </div>
+</body>
+
+</html>

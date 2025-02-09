@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gráfico de Coração</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="grafico.css">
+</head>
+
+<body>
+  <div class="card principal">
+    <h2>
+      <span class="heart">❤️</span>
+      Gráfico de Coração
+      <span class="heart">❤️</span>
+    </h2>
+    <input type="text" id="check" placeholder="Digite seu nome">
+    <button onclick="Checagem()">Calcular</button>
+  </div>
+
+  <div id="errorCard" class="error-card">
+    <p class="error-message">Ops.. parece que não é para você, tente outro nome!!</p>
+    <p class="hint">Dica: Experimente nome_pessoa</p>
+  </div>
+
+  <div id="graphCard" class="card">
+    <canvas id="myChart" width="400" height="400"></canvas>
+  </div>
+  <button onclick="exibirGraficoDois()" class="botao">Exibir o verdadeiro</button>
+  <div id="graphCardDois" class="card">
+    <canvas id="myChartDois" width="400" height="400"></canvas>
+  </div>
+
+  <script>
+    const btn = document.querySelector('.botao');
+    const nome = document.getElementById("check");
+    const errorCard = document.getElementById("errorCard");
+    const graphCard = document.getElementById("graphCard");
+    const graphCardDois = document.getElementById("graphCardDois");
+
+    // Novo: Adiciona um listener para resetar quando o nome é alterado
+    nome.addEventListener('input', () => {
+      // Oculta os gráficos e o botão
+      graphCard.style.display = "none";
+      graphCard.classList.remove('show');
+      graphCardDois.style.display = "none";
+      graphCardDois.classList.remove('show');
+      btn.classList.remove('ativo');
+
+      // Oculta o card de erro
+      errorCard.style.display = "none";
+      errorCard.classList.remove('show');
+    });
+
+    function Checagem() {
+      const nameValue = nome.value.trim().toLowerCase();
+      if (nameValue == "nome_pessoa") {
+        errorCard.classList.remove('show');
+        errorCard.style.display = "none";
+
+        graphCard.style.display = "block";
+        setTimeout(() => {
+          graphCard.classList.add('show');
+        }, 10);
+
+        exibirGrafico();
+      } else {
+        errorCard.style.display = "block";
+        setTimeout(() => {
+          errorCard.classList.add('show');
+        }, 10);
+
+        graphCard.style.display = "none";
+        graphCard.classList.remove('show');
+
+        graphCardDois.style.display = "none";
+        graphCardDois.classList.remove('show');
+        btn.classList.remove('ativo');
+      }
+    }
+
+    function exibirGrafico() {
+      const ctx = document.getElementById('myChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Item 1', 'Item 2', 'Item 3'],
+          datasets: [{
+            label: 'Meu coração',
+            data: [2, 48, 50],
+            backgroundColor: ['#ff6384', '#36a2eb', '#00a80e'],
+            hoverOffset: 3
+          }]
+        }
+      });
+      btn.classList.add('ativo');
+    }
+
+    function exibirGraficoDois() {
+      graphCardDois.style.display = "block";
+      setTimeout(() => {
+        graphCardDois.classList.add('show');
+      }, 10);
+
+      const ctx = document.getElementById('myChartDois').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Item 1', 'Item 2', 'Item 3'],
+          datasets: [{
+            label: 'O verdadeiro coração',
+            data: [80, 10, 5],
+            backgroundColor: ['#ff477e', '#ffb84d', '#00c9a7'],
+            hoverOffset: 3
+          }]
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>
