@@ -145,7 +145,7 @@
         <input type="text" id="pedidoInput" placeholder="Digite o pedido">
         <button class="btn-gerar" onclick="criptografarPedido()">Gerar</button>
 
-        <h2>Pedido criptografado:</h2>
+        <h2>Link do pedido:</h2>
         <div class="copy-container">
             <textarea id="outputCriptografia" readonly></textarea>
             <button class="btn-copy" onclick="copiarTexto()">📋</button>
@@ -166,7 +166,7 @@
                 return;
             }
             const criptografado = encodeURIComponent(CryptoJS.AES.encrypt(pedido, chaveSecreta).toString());
-            document.getElementById("outputCriptografia").value = "?pedido="+criptografado;
+            document.getElementById("outputCriptografia").value = "https://estruttijp.github.io/correio-elegante/pedido.html?pedido="+criptografado;
         }
 
         function copiarTexto() {
