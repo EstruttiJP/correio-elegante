@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amor em Códigos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #ff9ae1, #ea7dee);
+            text-align: center;
+            color: #ffffff;
+            padding-top: 50px;
+            font-family: 'Questrial', sans-serif;
+            font-size: 18px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #mensagem {
+            font-size: 1.2em;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: black;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        #input-codigo {
+            padding: 10px;
+            font-size: 1em;
+            width: 250px;
+            border: 2px solid #ff2768;
+            border-radius: 8px;
+            text-align: left;
+            outline: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #input-codigo:focus {
+            border-color: #ff4f88;
+        }
+
+        button {
+            margin-top: 15px;
+            cursor: pointer;
+            background-color: #ff2768;
+            color: #ffffff;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            height: 45px;
+            width: 180px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background-color: #ff4f88;
+        }
+
+        #card-aviso {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background: white;
+            color: black;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 270px;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s ease, transform 0.3s ease;
+        }
+
+        #card-aviso.mostrar {
+            display: block;
+            opacity: 1;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Amor Codificado</h1>
+    <div class="container">
+        <p id="mensagem"></p>
+        <input type="text" id="input-codigo" placeholder="Digite a palavra mágica...">
+        <button onclick="revelarMensagem()">Descobrir</button>
+        <div id="card-aviso" class="">
+            <p id="aviso-texto">Palavra magica incorreta... tente novamente!</p>
+            <p><strong>Dicas:</strong> <span id="dica-texto"></span></p>
+        </div>
+    </div>
+
+    <script>
+        const chaveSecreta = "minha-chave-super-secreta";
+        let tentativas = 0;
+        let dicas = [];
+
+        function obterDadosDaURL() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                mensagemCriptografada: params.get('mensagem'),
+                dica1: params.get('dica1'),
+                dica2: params.get('dica2'),
+                dica3: params.get('dica3'),
+                chaveCriptografada: params.get('chave')
+            };
+        }
+
+        function descriptografar(texto, chave) {
+            try {
+                const bytes = CryptoJS.AES.decrypt(decodeURIComponent(texto), chave);
+                return bytes.toString(CryptoJS.enc.Utf8);
+            } catch (error) {
+                return "Erro ao descriptografar";
+            }
+        }
+
+        function revelarMensagem() {
+            const inputChave = document.getElementById('input-codigo').value;
+            const avisoCard = document.getElementById('card-aviso');
+            const dicaTexto = document.getElementById('dica-texto');
+            
+            if (inputChave === chaveDescriptografada) {
+                document.getElementById('mensagem').innerText = mensagemDescriptografada;
+                avisoCard.classList.remove('mostrar');
+            } else {
+                tentativas++;
+                avisoCard.classList.add('mostrar');
+                adicionarDica();
+            }
+        }
+
+        function adicionarDica() {
+            if (tentativas === 1 && dica1) dicas.push(dica1);
+            if (tentativas === 2 && dica2) dicas.push(dica2);
+            if (tentativas === 3 && dica3) dicas.push(dica3);
+            document.getElementById('dica-texto').innerText = dicas.join(' | ');
+        }
+
+        const { mensagemCriptografada, dica1, dica2, dica3, chaveCriptografada } = obterDadosDaURL();
+        const chaveDescriptografada = descriptografar(chaveCriptografada, chaveSecreta);
+        const mensagemDescriptografada = descriptografar(mensagemCriptografada, chaveSecreta);
+        document.getElementById('mensagem').innerText = mensagemCriptografada;
+    </script>
+</body>
+
+</html>
+

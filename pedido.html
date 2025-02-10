@@ -55,7 +55,7 @@
         function getPedidoFromUrl() {
             const params = new URLSearchParams(window.location.search);
             const pedidoCriptografado = params.get('pedido');
-            return pedidoCriptografado ? descriptografarPedido(pedidoCriptografado) : 'Nenhum pedido encontrado';
+            return pedidoCriptografado ? descriptografarPedido(pedidoCriptografado) : 'Ops... nenhum pedido encontrado';
         }
 
         window.onload = function () {
@@ -70,18 +70,21 @@
     <button id="nao">não</button>
     <script>
         const nao = document.getElementById("nao");
-        nao.addEventListener("mouseover", function () {
-            const randomX = Math.floor(Math.random() * window.innerWidth);
-            const randomY = Math.floor(Math.random() * window.innerHeight);
-            nao.style.position = "absolute";
-            nao.style.top = randomY + "px";
-            nao.style.left = randomX + "px";
-        });
+        nao.addEventListener("mouseover", fugir);
+        nao.addEventListener("click", fugir);
 
         const sim = document.getElementById("sim");
         sim.addEventListener("click", function () {
             window.location.href = "https://youtu.be/izGwDsrQ1eQ";
         });
+
+        function fugir() {
+            const randomX = Math.floor(Math.random() * window.innerWidth);
+            const randomY = Math.floor(Math.random() * window.innerHeight);
+            nao.style.position = "absolute";
+            nao.style.top = randomY + "px";
+            nao.style.left = randomX + "px";
+        }
     </script>
 </body>
 

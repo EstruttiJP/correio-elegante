@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar Link - Amor Codificado</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #1E1E1E;
+            color: #E0E0E0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #2C2C2C;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        h2 { 
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #555;
+            background: #1E1E1E;
+            color: #E0E0E0;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+            margin: 12px 0;
+        }
+
+        .btn-gerar {
+            background: #007BFF;
+            color: white;
+        }
+
+        .btn-gerar:hover {
+            background: #0056b3;
+        }
+
+        .btn-voltar {
+            background: #444;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .btn-voltar:hover {
+            background: #666;
+        }
+
+        .copy-container {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            background: #1E1E1E;
+            border-radius: 6px;
+            border: 1px solid #555;
+            overflow: hidden;
+        }
+
+        textarea {
+            flex: 1;
+            height: 50px;
+            padding: 10px;
+            border: none;
+            background: #1E1E1E;
+            color: #E0E0E0;
+            font-size: 16px;
+            resize: none;
+        }
+
+        .btn-copy {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background: #00C853;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 0;
+        }
+
+        .btn-copy:hover {
+            background: #009624;
+        }
+
+        .copy-message {
+            font-size: 14px;
+            color: #00C853;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .copy-message.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Gerar Link - Amor Codificado</h1>
+        <input type="text" id="mensagemInput" placeholder="Digite a mensagem">
+        <input type="text" id="chaveInput" placeholder="Digite a chave secreta">
+        <input type="text" id="dica1Input" placeholder="Dica">
+        <input type="text" id="dica2Input" placeholder="Dica 2 (Opcional)">
+        <input type="text" id="dica3Input" placeholder="Dica 3 (Opcional)">
+        <button onclick="gerarLink()" class="btn-gerar">Gerar Link</button>
+
+        <div class="copy-container">
+            <textarea id="outputLink" readonly placeholder="O link gerado aparecerá aqui..."></textarea>
+            <button class="btn-copy" onclick="copiarTexto()">📋</button>
+        </div>
+
+        <p id="copyMessage" class="copy-message">Link copiado!</p>
+    </div>
+
+    <script>
+        const chaveSecreta = "minha-chave-super-secreta";
+
+        function criptografarTexto(texto) {
+            return encodeURIComponent(CryptoJS.AES.encrypt(texto, chaveSecreta).toString());
+        }
+
+        function gerarLink() {
+            const mensagem = document.getElementById("mensagemInput").value;
+            const chave = document.getElementById("chaveInput").value;
+            const dica1 = document.getElementById("dica1Input").value.replace(/ /g, "%20").replace(/'/g, "%27");
+            const dica2 = document.getElementById("dica2Input").value.replace(/ /g, "%20").replace(/'/g, "%27");
+            const dica3 = document.getElementById("dica3Input").value.replace(/ /g, "%20").replace(/'/g, "%27");
+
+            if (!mensagem || !chave) {
+                alert("Digite a mensagem e a chave secreta!");
+                return;
+            }
+
+            const mensagemCript = criptografarTexto(mensagem);
+            const chaveCript = criptografarTexto(chave);
+            const dica1Cript = dica1 ? dica1 : "";
+            const dica2Cript = dica2 ? dica2 : "";
+            const dica3Cript = dica3 ? dica3 : "";
+
+            let url = `https://estruttijp.github.io/correio-elegante/amor_codificado.html?mensagem=${mensagemCript}&chave=${chaveCript}`;
+            if (dica1) url += `&dica1=${dica1Cript}`;
+            if (dica2) url += `&dica2=${dica2Cript}`;
+            if (dica3) url += `&dica3=${dica3Cript}`;
+
+            document.getElementById("outputLink").value = url;
+        }
+
+        function copiarTexto() {
+            const output = document.getElementById("outputLink");
+            output.select();
+            document.execCommand("copy");
+            alert("Link copiado!");
+        }
+    </script>
+
+</body>
+
+</html>
