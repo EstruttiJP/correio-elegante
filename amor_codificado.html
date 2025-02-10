@@ -47,8 +47,10 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             color: black;
-            margin-bottom: 20px;
+            margin: 20px;
             animation: fadeIn 1.5s ease-in-out;
+            word-wrap: break-word;
+            width: 70%;
         }
 
         #input-codigo {
@@ -76,6 +78,7 @@
             border: none;
             height: 45px;
             width: 180px;
+            margin-bottom: 20px;
             transition: all 0.3s ease-in-out;
         }
 
@@ -86,7 +89,7 @@
 
         #card-aviso {
             display: none;
-            margin-top: 15px;
+            margin-top: 20px;
             padding: 12px;
             background: white;
             color: black;
@@ -103,12 +106,17 @@
             opacity: 1;
             transform: scale(1.1);
         }
+        .img{
+            width: 100px;
+        }
     </style>
 </head>
 
 <body>
     <h1>Amor Codificado</h1>
+    <img src="img/amor.png" alt="" class="img">
     <div class="container">
+        <p>alguem te enviou isso...</p>
         <p id="mensagem"></p>
         <input type="text" id="input-codigo" placeholder="Digite a palavra mágica...">
         <button onclick="revelarMensagem()">Descobrir</button>
@@ -144,7 +152,7 @@
         }
 
         function revelarMensagem() {
-            const inputChave = document.getElementById('input-codigo').value;
+            const inputChave = document.getElementById('input-codigo').value.trim().toLowerCase();
             const avisoCard = document.getElementById('card-aviso');
             const dicaTexto = document.getElementById('dica-texto');
             
@@ -162,7 +170,7 @@
             if (tentativas === 1 && dica1) dicas.push(dica1);
             if (tentativas === 2 && dica2) dicas.push(dica2);
             if (tentativas === 3 && dica3) dicas.push(dica3);
-            document.getElementById('dica-texto').innerText = dicas.join(' | ');
+            document.getElementById('dica-texto').innerText = dicas.join(' \n - ');
         }
 
         const { mensagemCriptografada, dica1, dica2, dica3, chaveCriptografada } = obterDadosDaURL();

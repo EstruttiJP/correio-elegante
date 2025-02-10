@@ -1,70 +1,4 @@
-let contadorItens = 0;
-const maxItens = 5;
-
-document.getElementById("graficoForm").addEventListener("submit", function (event) {
-  event.preventDefault(); // Impede o envio do formulário
-
-  // Captura os valores do formulário
-  const nomesAcesso = document.getElementById("nomesAcesso").value.trim().toLowerCase().split(",").map(nome => nome.trim());
-  const dica = document.getElementById("dica").value;
-
-  const itens = [];
-  const percFalsas = [];
-  const percVerdadeiras = [];
-
-  for (let i = 1; i <= contadorItens; i++) {
-    const nomeItem = document.getElementById(`itemNome${i}`).value;
-    const porcentagemFalsa = document.getElementById(`itemPorcentagemFalsa${i}`).value;
-    const porcentagemVerdadeira = document.getElementById(`itemPorcentagemVerdadeira${i}`).value;
-
-    if (nomeItem && porcentagemFalsa && porcentagemVerdadeira) {
-      itens.push(nomeItem);
-      percFalsas.push(parseInt(porcentagemFalsa));
-      percVerdadeiras.push(parseInt(porcentagemVerdadeira));
-    }
-  }
-
-  // Gera o HTML do gráfico
-  const htmlGerado = gerarGraficoPersonalizado(nomesAcesso, dica, itens, percFalsas, percVerdadeiras);
-
-  // Exibe o HTML gerado no textarea
-  document.getElementById("htmlPronto").value = htmlGerado;
-});
-
-function adicionarItem() {
-  if (contadorItens >= maxItens) {
-    alert("Você atingiu o número máximo de itens.");
-    return;
-  }
-
-  contadorItens++;
-
-  // Cria os campos para o item e porcentagens falsa e verdadeira
-  const divItem = document.createElement("div");
-  divItem.classList.add("item");
-  divItem.innerHTML = `
-    <div class="small-input">
-      <label for="itemNome${contadorItens}">Nome do Item ${contadorItens}:</label>
-      <input type="text" id="itemNome${contadorItens}" name="itemNome${contadorItens}" placeholder="Nome do Item" required>
-    </div>
-    <div class="small-input">
-      <label for="itemPorcentagemFalsa${contadorItens}">% Falsa:</label>
-      <input type="number" id="itemPorcentagemFalsa${contadorItens}" name="itemPorcentagemFalsa${contadorItens}" placeholder="0" min="0" max="100" required>
-    </div>
-    <div class="small-input">
-      <label for="itemPorcentagemVerdadeira${contadorItens}">% Verdadeira:</label>
-      <input type="number" id="itemPorcentagemVerdadeira${contadorItens}" name="itemPorcentagemVerdadeira${contadorItens}" placeholder="0" min="0" max="100" required>
-    </div>
-  `;
-
-  document.getElementById("itens").appendChild(divItem);
-}
-
-// Adiciona pelo menos um item inicial
-adicionarItem();
-
-function gerarGraficoPersonalizado(nomes, dica, itens, percFalsas, percVerdadeiras) {
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
   <html lang="pt-BR">
   <head>
     <meta charset="UTF-8">
@@ -86,7 +20,7 @@ function gerarGraficoPersonalizado(nomes, dica, itens, percFalsas, percVerdadeir
   
     <div id="errorCard" class="error-card" style="display: none;">
     <p class="error-message">Ops.. parece que não é para você, tente outro nome!!</p>
-    <p class="hint">Dica: ${JSON.stringify(dica)}</p>
+    <p class="hint">Dica: "Anal"</p>
 </div>
 <div id="graphCard" class="card" style="display: none;">
     <canvas id="myChart" width="400" height="400"></canvas>
@@ -97,10 +31,10 @@ function gerarGraficoPersonalizado(nomes, dica, itens, percFalsas, percVerdadeir
 </div>
 
 <script>
-    const nomesPermitidos = ${JSON.stringify(nomes || [])};
-    const itensLabels = ${JSON.stringify(itens || [])};
-    const dadosFalsos = ${JSON.stringify(percFalsas || [])};
-    const dadosVerdadeiros = ${JSON.stringify(percVerdadeiras || [])};
+    const nomesPermitidos = ["ana","anajulia"];
+    const itensLabels = ["aaa","aaa5","a3"];
+    const dadosFalsos = [1,50,49];
+    const dadosVerdadeiros = [98,1,1];
 
     document.addEventListener("DOMContentLoaded", () => {
         const errorCard = document.getElementById("errorCard");
@@ -202,19 +136,4 @@ function gerarGraficoPersonalizado(nomes, dica, itens, percFalsas, percVerdadeir
     }
 </script>
 </body>
-</html>`;
-}
-
-function copiarTexto() {
-  const output = document.getElementById("htmlPronto");
-  output.select();
-  output.setSelectionRange(0, 99999);
-  document.execCommand("copy");
-
-  const message = document.getElementById("copyMessage");
-  message.classList.add("show");
-
-  setTimeout(() => {
-    message.classList.remove("show");
-  }, 2000);
-}
+</html>

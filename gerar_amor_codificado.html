@@ -165,10 +165,10 @@
 
         function gerarLink() {
             const mensagem = document.getElementById("mensagemInput").value;
-            const chave = document.getElementById("chaveInput").value;
-            const dica1 = document.getElementById("dica1Input").value.replace(/ /g, "%20").replace(/'/g, "%27");
-            const dica2 = document.getElementById("dica2Input").value.replace(/ /g, "%20").replace(/'/g, "%27");
-            const dica3 = document.getElementById("dica3Input").value.replace(/ /g, "%20").replace(/'/g, "%27");
+            const chave = document.getElementById("chaveInput").value.trim().toLowerCase();
+            const dica1 = document.getElementById("dica1Input").value;
+            const dica2 = document.getElementById("dica2Input").value;
+            const dica3 = document.getElementById("dica3Input").value;
 
             if (!mensagem || !chave) {
                 alert("Digite a mensagem e a chave secreta!");
